@@ -1,5 +1,8 @@
+import { useState } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import DashboardForm from '../../components/dashboard/DashboardForm.jsx'
+import Alert from '../../components/common/Alert.jsx'
+import { createUser } from '../../services/userService.js'
 import { toApiPayload } from '../../utils/formatUserData.js'
 
 // Starting values for the form (same nesting as the User model on the server;
@@ -22,9 +25,23 @@ const defaultValues = {
 function DashboardPage() {
   const methods = useForm({ defaultValues })
 
-  // For now we only log the data. Task 2.6 replaces this with the API call.
-  const handleSave = (data) => {
-    console.log('Payload ready to send:', toApiPayload(data))
+  // null = nothing to show, otherwise { type: 'success' | 'error', message }
+  const [status, setStatus] = useState(null)
+
+  // async + await: the form stays in "submitting" mode until the request finishes
+  const handleSave = async (data) => {
+    setStatus(null)
+
+    try {
+      const user = await createUser(toApiPayload(data))
+      setStatus({
+        type: 'success',
+        message: `Saved! Portfolio created for "${user.username}".`,
+      })
+    } catch (error) {
+      // error.message comes from the server's { message } reply (see api.js)
+      setStatus({ type: 'error', message: error.message })
+    }
   }
 
   return (
@@ -35,6 +52,12 @@ function DashboardPage() {
         <FormProvider {...methods}>
           <DashboardForm onSubmit={handleSave} />
         </FormProvider>
+
+        {status && (
+          <div className="mt-6">
+            <Alert type={status.type}>{status.message}</Alert>
+          </div>
+        )}
       </div>
     </div>
   )
