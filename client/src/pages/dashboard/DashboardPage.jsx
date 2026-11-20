@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useForm, FormProvider } from 'react-hook-form'
 import DashboardForm from '../../components/dashboard/DashboardForm.jsx'
+import PortfolioPreview from '../../components/dashboard/PortfolioPreview.jsx'
 import Alert from '../../components/common/Alert.jsx'
 import { createUser } from '../../services/userService.js'
 import { toApiPayload } from '../../utils/formatUserData.js'
@@ -46,18 +47,28 @@ function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-slate-900 px-6 py-10">
-      <div className="mx-auto max-w-2xl">
+      <div className="mx-auto max-w-6xl">
         <h1 className="mb-8 text-3xl font-bold text-white">Portfolio Builder</h1>
 
+        {/* The provider wraps BOTH columns so the preview can read the form */}
         <FormProvider {...methods}>
-          <DashboardForm onSubmit={handleSave} />
-        </FormProvider>
+          {/* flex-wrap: side by side when there is room, stacked when there is not */}
+          <div className="flex flex-wrap items-start gap-8">
+            <div className="grow basis-[28rem]">
+              <DashboardForm onSubmit={handleSave} />
 
-        {status && (
-          <div className="mt-6">
-            <Alert type={status.type}>{status.message}</Alert>
+              {status && (
+                <div className="mt-6">
+                  <Alert type={status.type}>{status.message}</Alert>
+                </div>
+              )}
+            </div>
+
+            <aside className="sticky top-6 max-h-[calc(100vh-3rem)] grow basis-[22rem] overflow-y-auto">
+              <PortfolioPreview />
+            </aside>
           </div>
-        )}
+        </FormProvider>
       </div>
     </div>
   )
