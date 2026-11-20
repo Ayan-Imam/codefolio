@@ -1,14 +1,9 @@
 import { useFormContext } from 'react-hook-form'
 import FormField from '../common/FormField.jsx'
-import { inputClass } from '../../utils/formStyles.js'
-
-const URL_RULE = {
-  value: /^https?:\/\/\S+$/i,
-  message: 'Must start with http:// or https://',
-}
-
-// Columns appear when there is room and wrap to one column when there is not
-const rowClass = 'grid grid-cols-[repeat(auto-fit,minmax(14rem,1fr))] gap-4'
+import { inputClass, rowClass } from '../../utils/formStyles.js'
+import { URL_RULE } from '../../utils/formRules.js'
+import SkillsSection from './SkillsSection.jsx'
+import ProjectsSection from './ProjectsSection.jsx'
 
 function DashboardForm({ onSubmit }) {
   // The form is created in DashboardPage and shared through FormProvider
@@ -158,6 +153,11 @@ function DashboardForm({ onSubmit }) {
           </FormField>
         </div>
       </section>
+
+      {/* ---------- Repeating sections ---------- */}
+      <SkillsSection />
+
+      <ProjectsSection />
 
       <button
         type="submit"

@@ -1,7 +1,9 @@
 import { useForm, FormProvider } from 'react-hook-form'
 import DashboardForm from '../../components/dashboard/DashboardForm.jsx'
+import { toApiPayload } from '../../utils/formatUserData.js'
 
-// Same shape as the User model on the server
+// Starting values for the form (same nesting as the User model on the server;
+// skills use `itemsText` here and are converted to `items` by toApiPayload)
 const defaultValues = {
   username: '',
   profile: {
@@ -13,6 +15,8 @@ const defaultValues = {
     resumeUrl: '',
     socialLinks: { github: '', linkedin: '', twitter: '', website: '' },
   },
+  projects: [],
+  skills: [],
 }
 
 function DashboardPage() {
@@ -20,7 +24,7 @@ function DashboardPage() {
 
   // For now we only log the data. Task 2.6 replaces this with the API call.
   const handleSave = (data) => {
-    console.log('Form data ready to send:', data)
+    console.log('Payload ready to send:', toApiPayload(data))
   }
 
   return (
