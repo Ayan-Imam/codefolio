@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
+import userRoutes from './routes/user.routes.js';
+import errorHandler from './middleware/error.middleware.js';
 
 const app = express();
 
@@ -24,10 +26,16 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// User routes: everything in user.routes.js lives under /api/users
+app.use('/api/users', userRoutes);
+
 // ---------- 404 handler ----------
 // Runs only if no route above matched
 app.use((req, res) => {
   res.status(404).json({ message: `Route not found: ${req.method} ${req.originalUrl}` });
 });
+
+// ---------- Error handler (must be last) ----------
+app.use(errorHandler);
 
 export default app;
