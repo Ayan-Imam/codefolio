@@ -1,5 +1,6 @@
 import express from 'express';
 import cors from 'cors';
+import mongoose from 'mongoose';
 
 const app = express();
 
@@ -11,9 +12,16 @@ app.use(cors({ origin: process.env.CLIENT_URL }));
 app.use(express.json());
 
 // ---------- Routes ----------
-// Health check: confirms the API is up
+// Mongoose connection states, indexed by mongoose.connection.readyState
+const dbStates = ['disconnected', 'connected', 'connecting', 'disconnecting'];
+
+// Health check: confirms the API and database are up
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'ok', message: 'CodeFolio API is running' });
+  res.json({
+    status: 'ok',
+    message: 'CodeFolio API is running',
+    database: dbStates[mongoose.connection.readyState],
+  });
 });
 
 // ---------- 404 handler ----------
