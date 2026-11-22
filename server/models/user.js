@@ -1,5 +1,9 @@
 import mongoose from 'mongoose';
 
+// Every template the app supports.
+// When we add a new template, its id goes here AND in PortfolioRenderer's templateMap.
+export const TEMPLATE_IDS = ['minimalist', 'cyberpunk'];
+
 // ---------- Sub-schema: one project ----------
 const projectSchema = new mongoose.Schema({
   title: {
@@ -69,6 +73,16 @@ const userSchema = new mongoose.Schema(
 
     projects: [projectSchema],
     skills: [skillCategorySchema],
+
+    // Which layout renders this user's portfolio
+    templateId: {
+      type: String,
+      enum: {
+        values: TEMPLATE_IDS,
+        message: '{VALUE} is not a supported template',
+      },
+      default: 'minimalist',
+    },
   },
   { timestamps: true } // adds createdAt and updatedAt automatically
 );
