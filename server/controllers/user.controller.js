@@ -12,3 +12,22 @@ export const createUser = async (req, res) => {
 
   res.status(201).json(user);
 };
+
+// GET /api/users/:username
+// Returns the public data of one portfolio
+export const getUserByUsername = async (req, res) => {
+  // Usernames are stored in lowercase, so /NEON_USER finds neon_user too
+  const username = req.params.username.toLowerCase();
+
+  // Not .lean(): a full document gets schema defaults filled in (e.g. templateId)
+  // select(): leave out the internal version field and the private contact email
+  const user = await User.findOne({ username }).select('-__v -profile.email');
+
+  if (!user) {
+    return res
+      .status(404)
+      .json({ message: `No portfolio found for "${req.params.username}"` });
+  }
+
+  res.json(user);
+};

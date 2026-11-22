@@ -1,9 +1,10 @@
 import { Router } from 'express';
-import { createUser } from '../controllers/user.controller.js';
+import { createUser, getUserByUsername } from '../controllers/user.controller.js';
 
 const router = Router();
 
-// Full path is /api/users + '/' (the prefix is added in app.js)
+// Full paths are /api/users + the path below (the prefix is added in app.js)
 router.post('/', createUser);
+router.get('/:username', getUserByUsername);
 
 export default router;
