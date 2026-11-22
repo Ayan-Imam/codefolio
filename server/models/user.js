@@ -4,6 +4,12 @@ import mongoose from 'mongoose';
 // When we add a new template, its id goes here AND in PortfolioRenderer's templateMap.
 export const TEMPLATE_IDS = ['minimalist', 'cyberpunk'];
 
+// Usernames that would clash with app URLs (/dashboard, /login ...) or look official
+export const RESERVED_USERNAMES = [
+  'dashboard', 'login', 'register', 'signup', 'logout',
+  'api', 'admin', 'settings', 'preview', 'assets', 'about', 'pricing',
+];
+
 // ---------- Sub-schema: one project ----------
 const projectSchema = new mongoose.Schema({
   title: {
@@ -49,6 +55,10 @@ const userSchema = new mongoose.Schema(
         /^[a-z0-9_-]+$/,
         'Username can only contain letters, numbers, underscores and hyphens',
       ],
+      validate: {
+        validator: (value) => !RESERVED_USERNAMES.includes(value),
+        message: '"{VALUE}" is reserved, please choose another username',
+      },
     },
 
     profile: {

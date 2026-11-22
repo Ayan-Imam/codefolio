@@ -6,3 +6,8 @@ export const createUser = (payload) =>
     method: 'POST',
     body: JSON.stringify(payload),
   })
+
+// GET /api/users/:username: fetches one public portfolio
+// encodeURIComponent keeps odd characters in the username from breaking the URL
+export const getUserByUsername = (username) =>
+  apiRequest(`/users/${encodeURIComponent(username)}`)

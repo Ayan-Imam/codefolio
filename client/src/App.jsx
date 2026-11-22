@@ -1,17 +1,32 @@
+import { Routes, Route, Navigate } from 'react-router'
 import DashboardPage from './pages/dashboard/DashboardPage.jsx'
-import PortfolioRenderer from './components/common/PortfolioRenderer.jsx'
-import { sampleUser } from './templates/sampleData.js'
+import PublicPortfolioPage from './pages/public/PublicPortfolioPage.jsx'
+import MessagePage from './pages/public/MessagePage.jsx'
 
-// TEMPORARY test switch: /?preview=<templateId> renders the sample data through the
-// renderer with that template id. Task 3.6 replaces this with real routing.
 function App() {
-  const preview = new URLSearchParams(window.location.search).get('preview')
+  return (
+    <Routes>
+      {/* The home page just sends people to the builder for now */}
+      <Route path="/" element={<Navigate to="/dashboard" replace />} />
 
-  if (preview) {
-    return <PortfolioRenderer userData={{ ...sampleUser, templateId: preview }} />
-  }
+      {/* The builder */}
+      <Route path="/dashboard" element={<DashboardPage />} />
 
-  return <DashboardPage />
+      {/* Public portfolios, e.g. /neon_user */}
+      <Route path="/:username" element={<PublicPortfolioPage />} />
+
+      {/* Anything else, e.g. /a/b */}
+      <Route
+        path="*"
+        element={
+          <MessagePage
+            title="Page not found"
+            message="The page you are looking for does not exist."
+          />
+        }
+      />
+    </Routes>
+  )
 }
 
 export default App
