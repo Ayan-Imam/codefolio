@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router'
 import { useForm, FormProvider } from 'react-hook-form'
 import DashboardForm from '../../components/dashboard/DashboardForm.jsx'
 import PortfolioPreview from '../../components/dashboard/PortfolioPreview.jsx'
@@ -26,7 +27,8 @@ const defaultValues = {
 function DashboardPage() {
   const methods = useForm({ defaultValues })
 
-  // null = nothing to show, otherwise { type: 'success' | 'error', message }
+  // null = nothing to show, otherwise
+  // { type: 'success' | 'error', message, username? }  (username only on success)
   const [status, setStatus] = useState(null)
 
   // async + await: the form stays in "submitting" mode until the request finishes
@@ -38,6 +40,7 @@ function DashboardPage() {
       setStatus({
         type: 'success',
         message: `Saved! Portfolio created for "${user.username}".`,
+        username: user.username,
       })
     } catch (error) {
       // error.message comes from the server's { message } reply (see api.js)
@@ -58,8 +61,21 @@ function DashboardPage() {
               <DashboardForm onSubmit={handleSave} />
 
               {status && (
-                <div className="mt-6">
+                <div className="mt-6 flex flex-col gap-3">
                   <Alert type={status.type}>{status.message}</Alert>
+
+                  {/* Only successful saves have a username, so only they get a link.
+                      target="_blank" opens a new tab and keeps this form open. */}
+                  {status.username && (
+                    <Link
+                      to={`/${status.username}`}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="self-start text-emerald-400 hover:underline"
+                    >
+                      View your portfolio at /{status.username} →
+                    </Link>
+                  )}
                 </div>
               )}
             </div>
