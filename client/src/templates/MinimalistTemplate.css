@@ -1,0 +1,136 @@
+/* ===== Minimalist template =====
+   Every class starts with "minimal" so it can never clash with another template.
+   No media queries: the layout adapts with clamp(), flex-wrap and max-width. */
+
+.minimal {
+  --minimal-bg: #fafaf9;
+  --minimal-text: #1c1917;
+  --minimal-muted: #78716c;
+  --minimal-border: #e7e5e4;
+  --minimal-link-line: #d6d3d1;
+
+  min-height: 100vh;
+  background: var(--minimal-bg);
+  color: var(--minimal-text);
+  font-family: ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+    Helvetica, Arial, sans-serif;
+  line-height: 1.6;
+}
+
+/* One centered column with generous whitespace */
+.minimal-page {
+  max-width: 42rem;
+  margin: 0 auto;
+  padding: clamp(2rem, 8vw, 5rem) clamp(1.25rem, 5vw, 2rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2rem, 5vw, 3rem);
+  overflow-wrap: anywhere; /* long words and URLs never cause sideways scrolling */
+}
+
+/* ----- Header ----- */
+.minimal-name {
+  font-size: clamp(2rem, 7vw, 3rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.minimal-headline {
+  margin-top: 0.5rem;
+  font-size: clamp(1.05rem, 3vw, 1.25rem);
+}
+
+.minimal-location {
+  margin-top: 0.25rem;
+  font-size: 0.9rem;
+  color: var(--minimal-muted);
+}
+
+/* ----- About ----- */
+.minimal-bio {
+  font-size: 1.05rem;
+  white-space: pre-line; /* keeps the line breaks typed in the bio */
+}
+
+/* ----- Links ----- */
+.minimal-links,
+.minimal-project-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+}
+
+.minimal-link {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--minimal-link-line);
+  text-underline-offset: 0.25em;
+  transition: text-decoration-color 0.15s;
+}
+
+.minimal-link:hover {
+  text-decoration-color: currentColor;
+}
+
+/* ----- Section titles ----- */
+.minimal-section-title {
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--minimal-border);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--minimal-muted);
+}
+
+/* ----- Skills ----- */
+.minimal-skill-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1.5rem;
+  padding: 0.4rem 0;
+}
+
+.minimal-skill-category {
+  flex: 0 0 8rem;
+  font-weight: 600;
+}
+
+.minimal-skill-items {
+  flex: 1 1 14rem;
+  color: var(--minimal-muted);
+}
+
+/* ----- Projects ----- */
+.minimal-project {
+  padding: 1.25rem 0;
+  border-bottom: 1px solid var(--minimal-border);
+}
+
+.minimal-project:first-of-type {
+  padding-top: 0;
+}
+
+.minimal-project:last-of-type {
+  border-bottom: none;
+}
+
+.minimal-project-image {
+  width: 100%;
+  max-height: 16rem;
+  margin-bottom: 0.75rem;
+  border-radius: 0.375rem;
+  object-fit: cover;
+}
+
+.minimal-project-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.minimal-project-description {
+  margin: 0.25rem 0 0.75rem;
+  color: var(--minimal-muted);
+}
