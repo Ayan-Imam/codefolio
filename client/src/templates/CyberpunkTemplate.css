@@ -1,0 +1,199 @@
+/* ===== Cyberpunk template =====
+   Every class starts with "cyber" so it can never clash with another template.
+   No media queries: the layout adapts with clamp(), auto-fit grid and flex-wrap. */
+
+.cyber {
+  --cyber-bg: #07070f;
+  --cyber-surface: #0f0f1d;
+  --cyber-text: #e8e8f5;
+  --cyber-muted: #9d9dbd;
+  --cyber-cyan: #00f0ff;
+  --cyber-pink: #ff2bd6;
+  --cyber-yellow: #fcee0a;
+
+  min-height: 100vh;
+  background-color: var(--cyber-bg);
+  /* A faint grid: one layer of horizontal lines, one of vertical lines */
+  background-image:
+    linear-gradient(rgba(0, 240, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 240, 255, 0.05) 1px, transparent 1px);
+  background-size: 2.5rem 2.5rem;
+  color: var(--cyber-text);
+  font-family: ui-monospace, 'Cascadia Code', 'SFMono-Regular', Consolas,
+    'Courier New', monospace;
+  line-height: 1.65;
+}
+
+.cyber-page {
+  max-width: 62rem;
+  margin: 0 auto;
+  padding: clamp(2rem, 7vw, 4.5rem) clamp(1.25rem, 5vw, 2.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(2.25rem, 6vw, 3.5rem);
+  overflow-wrap: anywhere; /* long words and URLs never cause sideways scrolling */
+}
+
+/* ----- Header ----- */
+.cyber-name {
+  font-size: clamp(2rem, 8vw, 3.75rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #ffffff;
+  /* two glow layers, plus a hard pink offset for the "glitch" edge */
+  text-shadow:
+    0 0 8px var(--cyber-cyan),
+    0 0 24px rgba(0, 240, 255, 0.5),
+    3px 3px 0 var(--cyber-pink);
+}
+
+.cyber-headline {
+  margin-top: 0.75rem;
+  font-size: clamp(1rem, 3vw, 1.35rem);
+  color: var(--cyber-cyan);
+}
+
+.cyber-headline::before {
+  content: '> ';
+  color: var(--cyber-pink);
+}
+
+.cyber-location {
+  margin-top: 0.25rem;
+  font-size: 0.9rem;
+  color: var(--cyber-muted);
+}
+
+.cyber-location::before {
+  content: '[ ';
+}
+
+.cyber-location::after {
+  content: ' ]';
+}
+
+/* ----- About ----- */
+.cyber-bio {
+  max-width: 46rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--cyber-pink);
+  white-space: pre-line; /* keeps the line breaks typed in the bio */
+}
+
+/* ----- Links (buttons) ----- */
+.cyber-links,
+.cyber-card-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.cyber-link {
+  padding: 0.4rem 1rem;
+  border: 1px solid var(--cyber-cyan);
+  color: var(--cyber-cyan);
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  box-shadow: 0 0 6px rgba(0, 240, 255, 0.35);
+  transition: background-color 0.15s, color 0.15s, box-shadow 0.15s;
+}
+
+.cyber-link:hover {
+  background-color: var(--cyber-cyan);
+  color: var(--cyber-bg);
+  box-shadow: 0 0 16px var(--cyber-cyan);
+}
+
+.cyber-link:focus-visible {
+  outline: 2px solid var(--cyber-yellow);
+  outline-offset: 3px;
+}
+
+/* ----- Section titles ----- */
+.cyber-section-title {
+  margin-bottom: 1.25rem;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--cyber-pink);
+  text-shadow: 0 0 8px rgba(255, 43, 214, 0.7);
+}
+
+.cyber-section-title::before {
+  content: '// ';
+}
+
+/* ----- Skills ----- */
+.cyber-skill-group {
+  margin-bottom: 1.25rem;
+}
+
+.cyber-skill-category {
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--cyber-yellow);
+}
+
+.cyber-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.cyber-chip {
+  padding: 0.25rem 0.75rem;
+  border: 1px solid rgba(0, 240, 255, 0.6);
+  background-color: rgba(0, 240, 255, 0.07);
+  font-size: 0.8rem;
+  box-shadow: 0 0 8px rgba(0, 240, 255, 0.2);
+}
+
+/* ----- Projects ----- */
+/* auto-fit: as many 17rem columns as fit; min(100%, 17rem) keeps narrow screens to one column */
+.cyber-projects {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  gap: 1.25rem;
+}
+
+.cyber-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.25rem;
+  background-color: var(--cyber-surface);
+  border: 1px solid rgba(255, 43, 214, 0.45);
+  border-left: 4px solid var(--cyber-pink);
+  box-shadow: 0 0 18px rgba(255, 43, 214, 0.12);
+}
+
+.cyber-card-image {
+  width: 100%;
+  max-height: 12rem;
+  object-fit: cover;
+  border: 1px solid rgba(0, 240, 255, 0.4);
+}
+
+.cyber-card-title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.cyber-card-description {
+  flex: 1; /* pushes the links to the bottom so cards in a row line up */
+  font-size: 0.9rem;
+  color: var(--cyber-muted);
+}
