@@ -2,12 +2,13 @@ import { useFormContext } from 'react-hook-form'
 import FormField from '../common/FormField.jsx'
 import Button from '../common/Button.jsx'
 import SectionCard from './SectionCard.jsx'
+import ImageUploadField from './ImageUploadField.jsx'
 import SkillsSection from './SkillsSection.jsx'
 import ProjectsSection from './ProjectsSection.jsx'
 import { inputClass, rowClass } from '../../utils/formStyles.js'
 import { URL_RULE } from '../../utils/formRules.js'
 
-function DashboardForm({ onSubmit, editing = false }) {
+function DashboardForm({ onSubmit, editing = false, onImageUpload }) {
   const {
     register,
     handleSubmit,
@@ -32,7 +33,11 @@ function DashboardForm({ onSubmit, editing = false }) {
         <div className={rowClass}>
           <FormField
             label="Username *"
-            hint={editing ? 'Your published portfolio URL is fixed' : 'Becomes your portfolio URL'}
+            hint={
+              editing
+                ? 'Your published portfolio URL is fixed'
+                : 'Becomes your portfolio URL'
+            }
             error={errors.username}
           >
             <input
@@ -62,6 +67,13 @@ function DashboardForm({ onSubmit, editing = false }) {
             />
           </FormField>
         </div>
+
+        <ImageUploadField
+          name="profile.photoUrl"
+          label="Profile photo"
+          error={profileErrors.photoUrl}
+          onUpload={onImageUpload}
+        />
 
         <FormField label="Headline" error={profileErrors.headline}>
           <input
@@ -160,7 +172,7 @@ function DashboardForm({ onSubmit, editing = false }) {
       </SectionCard>
 
       <SkillsSection />
-      <ProjectsSection />
+      <ProjectsSection onImageUpload={onImageUpload} />
 
       <Button type="submit" disabled={isSubmitting} className="py-3 text-base">
         {isSubmitting ? 'Saving...' : 'Save portfolio'}

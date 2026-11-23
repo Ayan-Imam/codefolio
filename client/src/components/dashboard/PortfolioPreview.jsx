@@ -43,6 +43,13 @@ function PortfolioPreview() {
         <div className="flex flex-col gap-6">
           {/* ---------- Header ---------- */}
           <header className="flex flex-col gap-1">
+            {isHttpUrl(profile.photoUrl) && (
+              <img
+                src={profile.photoUrl}
+                alt={profile.fullName ? `Portrait of ${profile.fullName}` : 'Profile photo'}
+                className="mb-2 size-20 rounded-full border border-white/15 object-cover"
+              />
+            )}
             <h2 className="font-display text-2xl font-bold text-white">
               {profile.fullName || <span className="text-ink-400">Your name</span>}
             </h2>

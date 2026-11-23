@@ -4,6 +4,7 @@ import Button from '../common/Button.jsx'
 import SectionCard from './SectionCard.jsx'
 import { inputClass, rowClass } from '../../utils/formStyles.js'
 import { URL_RULE } from '../../utils/formRules.js'
+import ImageUploadField from './ImageUploadField.jsx'
 
 const emptyProject = {
   title: '',
@@ -13,7 +14,7 @@ const emptyProject = {
   liveUrl: '',
 }
 
-function ProjectsSection() {
+function ProjectsSection({ onImageUpload }) {
   const {
     register,
     control,
@@ -73,17 +74,12 @@ function ProjectsSection() {
               />
             </FormField>
 
-            <FormField
-              label="Screenshot URL"
-              hint="Image upload comes later; for now paste a link"
+            <ImageUploadField
+              name={`projects.${index}.imageUrl`}
+              label="Screenshot"
               error={rowErrors.imageUrl}
-            >
-              <input
-                className={inputClass}
-                placeholder="https://..."
-                {...register(`projects.${index}.imageUrl`, { pattern: URL_RULE })}
-              />
-            </FormField>
+              onUpload={onImageUpload}
+            />
 
             <div className={rowClass}>
               <FormField label="GitHub repo" error={rowErrors.githubUrl}>

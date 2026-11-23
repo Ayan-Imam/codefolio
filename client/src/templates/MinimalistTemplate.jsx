@@ -13,6 +13,13 @@ function MinimalistTemplate({ data }) {
       <main className="minimal-page">
         {/* ---------- Header ---------- */}
         <header>
+          {isHttpUrl(profile.photoUrl) && (
+            <img
+              src={profile.photoUrl}
+              alt={profile.fullName ? `Portrait of ${profile.fullName}` : 'Profile photo'}
+              className="mb-4 size-24 rounded-full border border-slate-200 object-cover"
+            />
+          )}
           <h1 className="minimal-name">{profile.fullName}</h1>
           {profile.headline && <p className="minimal-headline">{profile.headline}</p>}
           {profile.location && <p className="minimal-location">{profile.location}</p>}

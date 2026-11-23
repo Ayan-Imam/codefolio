@@ -53,6 +53,13 @@ function CyberpunkTemplate({ data }) {
       <main className="cyber-page">
         {/* ---------- Header ---------- */}
         <header className="cyber-header">
+          {isHttpUrl(profile.photoUrl) && (
+            <img
+              src={profile.photoUrl}
+              alt={profile.fullName ? `Portrait of ${profile.fullName}` : 'Profile photo'}
+              className="mb-4 size-24 rounded-xl border border-cyan-400/60 object-cover"
+            />
+          )}
           <h1 className="cyber-name">{profile.fullName}</h1>
           {profile.headline && <p className="cyber-headline">{profile.headline}</p>}
           {profile.location && <p className="cyber-location">{profile.location}</p>}

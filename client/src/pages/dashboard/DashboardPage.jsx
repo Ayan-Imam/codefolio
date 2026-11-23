@@ -14,6 +14,7 @@ import {
   listMyPortfolios,
   updateMyPortfolio,
 } from '../../services/userService.js'
+import { uploadImage } from '../../services/uploadService.js'
 import { inputClass } from '../../utils/formStyles.js'
 import { toApiPayload } from '../../utils/formatUserData.js'
 
@@ -21,6 +22,7 @@ const defaultValues = {
   username: '',
   profile: {
     fullName: '',
+    photoUrl: '',
     headline: '',
     bio: '',
     location: '',
@@ -72,6 +74,7 @@ function DashboardPage({ token, onSignOut }) {
   const [listError, setListError] = useState('')
   const [editingUsername, setEditingUsername] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [isUploading, setIsUploading] = useState(false)
 
   useEffect(() => {
     const controller = new AbortController()
@@ -94,7 +97,7 @@ function DashboardPage({ token, onSignOut }) {
     return () => controller.abort()
   }, [token])
 
-  const isBusy = portfolios === null || isLoading || isSubmitting
+  const isBusy = portfolios === null || isLoading || isSubmitting || isUploading
 
   async function handlePortfolioChange(event) {
     const username = event.target.value
@@ -127,8 +130,21 @@ function DashboardPage({ token, onSignOut }) {
     }
   }
 
+  async function handleImageUpload(file) {
+    setIsUploading(true)
+
+    try {
+      return await uploadImage(file, token)
+    } catch (error) {
+      if (error.status === 401) onSignOut()
+      throw error
+    } finally {
+      setIsUploading(false)
+    }
+  }
+
   async function handleSave(data) {
-    if (portfolios === null || isLoading) return
+    if (portfolios === null || isLoading || isUploading) return
 
     setStatus(null)
     const payload = toApiPayload(data)
@@ -237,8 +253,20 @@ function DashboardPage({ token, onSignOut }) {
           <StatsStrip />
 
           <div className="flex flex-wrap items-start gap-8">
-            <div className="grow basis-[30rem]" inert={isBusy}>
-              <DashboardForm onSubmit={handleSave} editing={Boolean(editingUsername)} />
+            <div className="grow basis-[30rem]">
+              {isUploading && (
+                <p role="status" className="mb-3 text-sm text-ink-300">
+                  Uploading image…
+                </p>
+              )}
+
+              <div inert={isBusy}>
+                <DashboardForm
+                  onSubmit={handleSave}
+                  editing={Boolean(editingUsername)}
+                  onImageUpload={handleImageUpload}
+                />
+              </div>
             </div>
 
             <aside className="sticky top-24 max-h-[calc(100vh_-_7.5rem)] grow basis-[24rem] overflow-y-auto">
