@@ -1,5 +1,7 @@
 import { useFieldArray, useFormContext } from 'react-hook-form'
 import FormField from '../common/FormField.jsx'
+import Button from '../common/Button.jsx'
+import SectionCard from './SectionCard.jsx'
 import { inputClass, rowClass } from '../../utils/formStyles.js'
 import { URL_RULE } from '../../utils/formRules.js'
 
@@ -21,20 +23,18 @@ function ProjectsSection() {
   const { fields, append, remove } = useFieldArray({ control, name: 'projects' })
 
   return (
-    <section className="flex flex-col gap-4">
-      <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-emerald-400">Projects</h2>
-        <button
-          type="button"
-          onClick={() => append(emptyProject)}
-          className="rounded-md border border-emerald-400 px-3 py-1 text-sm text-emerald-400 hover:bg-emerald-400 hover:text-slate-900"
-        >
+    <SectionCard
+      id="projects"
+      title="Projects"
+      description="Show your best work. Each project can link to its code and a live demo."
+      action={
+        <Button variant="secondary" size="sm" onClick={() => append(emptyProject)}>
           + Add project
-        </button>
-      </div>
-
+        </Button>
+      }
+    >
       {fields.length === 0 && (
-        <p className="text-sm text-slate-400">
+        <p className="text-sm text-ink-400">
           No projects yet. Click "Add project" to start.
         </p>
       )}
@@ -45,9 +45,9 @@ function ProjectsSection() {
         return (
           <div
             key={field.id}
-            className="flex flex-col gap-4 rounded-lg border border-slate-700 p-4"
+            className="flex flex-col gap-4 rounded-xl border border-white/10 bg-white/[0.03] p-4"
           >
-            <h3 className="text-sm font-semibold text-slate-300">
+            <h3 className="font-display text-sm font-semibold text-ink-200">
               Project {index + 1}
             </h3>
 
@@ -103,17 +103,18 @@ function ProjectsSection() {
               </FormField>
             </div>
 
-            <button
-              type="button"
+            <Button
+              variant="danger"
+              size="sm"
+              className="self-start"
               onClick={() => remove(index)}
-              className="self-start text-sm text-red-400 hover:text-red-300"
             >
               Remove project
-            </button>
+            </Button>
           </div>
         )
       })}
-    </section>
+    </SectionCard>
   )
 }
 

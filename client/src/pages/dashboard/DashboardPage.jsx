@@ -50,14 +50,14 @@ function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-900 px-6 py-10">
+    <div className="app-bg px-6 py-10">
       <Helmet>
         <title>Portfolio Builder - CodeFolio</title>
         <meta name="robots" content="noindex" />
       </Helmet>
 
       <div className="mx-auto max-w-6xl">
-        <h1 className="mb-8 text-3xl font-bold text-white">Portfolio Builder</h1>
+        <h1 className="mb-8 font-display text-3xl font-bold text-white">Portfolio Builder</h1>
 
         {/* The provider wraps BOTH columns so the preview can read the form */}
         <FormProvider {...methods}>

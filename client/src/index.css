@@ -1,1 +1,50 @@
 @import "tailwindcss";
+
+/* ===== Design tokens =====
+   Everything in @theme becomes a Tailwind class:
+   --color-brand-500 -> bg-brand-500, text-brand-500, border-brand-500 ...
+   --font-display    -> font-display
+   --radius-card     -> rounded-card */
+@theme {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Space Grotesk Variable', 'Inter Variable', ui-sans-serif,
+    system-ui, sans-serif;
+
+  /* Backgrounds and muted text: near-black with a blue tint */
+  --color-ink-950: #07070d;
+  --color-ink-900: #0c0c15;
+  --color-ink-800: #13131f;
+  --color-ink-700: #1c1c2c;
+  --color-ink-600: #2a2a3f;
+  --color-ink-400: #6f6f89;
+  --color-ink-300: #9a9ab3;
+  --color-ink-200: #c4c4d6;
+  --color-ink-100: #e6e6ef;
+
+  /* Main accent: a vivid blue-violet */
+  --color-brand-300: #a9abff;
+  --color-brand-400: #8486ff;
+  --color-brand-500: #5f5fff;
+  --color-brand-600: #4a45f2;
+
+  /* Warm accent, used for the background glow and small highlights */
+  --color-ember-400: #ff8c42;
+
+  --radius-card: 1.25rem;
+}
+
+/* ===== App background =====
+   Used by the dashboard and marketing pages. Public portfolio templates do NOT use it:
+   they bring their own colors and fonts. */
+.app-bg {
+  min-height: 100vh;
+  background-color: var(--color-ink-950);
+  background-image:
+    radial-gradient(60rem 28rem at 50% -8%, rgb(255 140 66 / 0.18), transparent 70%),
+    radial-gradient(48rem 30rem at 0% 100%, rgb(95 95 255 / 0.2), transparent 70%);
+  background-attachment: fixed;
+  color: var(--color-ink-100);
+  font-family: var(--font-sans);
+  color-scheme: dark; /* dark scrollbars and form controls inside the app */
+  -webkit-font-smoothing: antialiased;
+}

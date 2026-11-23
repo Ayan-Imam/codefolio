@@ -1,5 +1,7 @@
 import { useFieldArray, useFormContext } from 'react-hook-form'
 import FormField from '../common/FormField.jsx'
+import Button from '../common/Button.jsx'
+import SectionCard from './SectionCard.jsx'
 import { inputClass, rowClass } from '../../utils/formStyles.js'
 import { parseSkillItems } from '../../utils/formatUserData.js'
 
@@ -13,20 +15,22 @@ function SkillsSection() {
   const { fields, append, remove } = useFieldArray({ control, name: 'skills' })
 
   return (
-    <section className="flex flex-col gap-4">
-      <div className="flex items-center justify-between">
-        <h2 className="text-lg font-semibold text-emerald-400">Skills</h2>
-        <button
-          type="button"
+    <SectionCard
+      id="skills"
+      title="Skills"
+      description="Group your skills into categories, like Frontend or Tools."
+      action={
+        <Button
+          variant="secondary"
+          size="sm"
           onClick={() => append({ category: '', itemsText: '' })}
-          className="rounded-md border border-emerald-400 px-3 py-1 text-sm text-emerald-400 hover:bg-emerald-400 hover:text-slate-900"
         >
           + Add category
-        </button>
-      </div>
-
+        </Button>
+      }
+    >
       {fields.length === 0 && (
-        <p className="text-sm text-slate-400">
+        <p className="text-sm text-ink-400">
           No skill categories yet. Click "Add category" to start.
         </p>
       )}
@@ -37,7 +41,7 @@ function SkillsSection() {
         return (
           <div
             key={field.id}
-            className="flex flex-col gap-4 rounded-lg border border-slate-700 p-4"
+            className="flex flex-col gap-4 rounded-xl border border-white/10 bg-white/[0.03] p-4"
           >
             <div className={rowClass}>
               <FormField label="Category *" error={rowErrors.category}>
@@ -68,17 +72,18 @@ function SkillsSection() {
               </FormField>
             </div>
 
-            <button
-              type="button"
+            <Button
+              variant="danger"
+              size="sm"
+              className="self-start"
               onClick={() => remove(index)}
-              className="self-start text-sm text-red-400 hover:text-red-300"
             >
               Remove category
-            </button>
+            </Button>
           </div>
         )
       })}
-    </section>
+    </SectionCard>
   )
 }
 

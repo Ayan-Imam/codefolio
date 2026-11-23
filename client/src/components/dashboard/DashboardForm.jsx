@@ -1,9 +1,11 @@
 import { useFormContext } from 'react-hook-form'
 import FormField from '../common/FormField.jsx'
-import { inputClass, rowClass } from '../../utils/formStyles.js'
-import { URL_RULE } from '../../utils/formRules.js'
+import Button from '../common/Button.jsx'
+import SectionCard from './SectionCard.jsx'
 import SkillsSection from './SkillsSection.jsx'
 import ProjectsSection from './ProjectsSection.jsx'
+import { inputClass, rowClass } from '../../utils/formStyles.js'
+import { URL_RULE } from '../../utils/formRules.js'
 
 function DashboardForm({ onSubmit }) {
   // The form is created in DashboardPage and shared through FormProvider
@@ -17,11 +19,13 @@ function DashboardForm({ onSubmit }) {
   const socialErrors = profileErrors.socialLinks || {}
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-8">
+    <form onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-6">
       {/* ---------- Basic info ---------- */}
-      <section className="flex flex-col gap-4">
-        <h2 className="text-lg font-semibold text-emerald-400">Basic info</h2>
-
+      <SectionCard
+        id="profile"
+        title="Basic info"
+        description="Your name, headline and a short bio. This is the first thing visitors see."
+      >
         <div className={rowClass}>
           <FormField
             label="Username *"
@@ -87,11 +91,7 @@ function DashboardForm({ onSubmit }) {
             />
           </FormField>
 
-          <FormField
-            label="Contact email"
-            hint="Optional"
-            error={profileErrors.email}
-          >
+          <FormField label="Contact email" hint="Optional" error={profileErrors.email}>
             <input
               type="email"
               className={inputClass}
@@ -105,12 +105,14 @@ function DashboardForm({ onSubmit }) {
             />
           </FormField>
         </div>
-      </section>
+      </SectionCard>
 
       {/* ---------- Links ---------- */}
-      <section className="flex flex-col gap-4">
-        <h2 className="text-lg font-semibold text-emerald-400">Links</h2>
-
+      <SectionCard
+        id="links"
+        title="Links"
+        description="Where visitors can find you and your resume."
+      >
         <FormField label="Resume URL" error={profileErrors.resumeUrl}>
           <input
             className={inputClass}
@@ -152,20 +154,15 @@ function DashboardForm({ onSubmit }) {
             />
           </FormField>
         </div>
-      </section>
+      </SectionCard>
 
       {/* ---------- Repeating sections ---------- */}
       <SkillsSection />
-
       <ProjectsSection />
 
-      <button
-        type="submit"
-        disabled={isSubmitting}
-        className="rounded-md bg-emerald-500 px-4 py-2 font-semibold text-slate-900 hover:bg-emerald-400 disabled:opacity-50"
-      >
+      <Button type="submit" disabled={isSubmitting} className="py-3 text-base">
         {isSubmitting ? 'Saving...' : 'Save portfolio'}
-      </button>
+      </Button>
     </form>
   )
 }
