@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router'
 import { useForm, FormProvider } from 'react-hook-form'
+import { Helmet } from 'react-helmet-async'
 import DashboardForm from '../../components/dashboard/DashboardForm.jsx'
 import PortfolioPreview from '../../components/dashboard/PortfolioPreview.jsx'
 import Alert from '../../components/common/Alert.jsx'
@@ -50,6 +51,11 @@ function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-slate-900 px-6 py-10">
+      <Helmet>
+        <title>Portfolio Builder - CodeFolio</title>
+        <meta name="robots" content="noindex" />
+      </Helmet>
+
       <div className="mx-auto max-w-6xl">
         <h1 className="mb-8 text-3xl font-bold text-white">Portfolio Builder</h1>
 

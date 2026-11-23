@@ -38,11 +38,12 @@ function PublicPortfolioPage() {
 
   if (result.error) {
     return result.error.status === 404 ? (
-      <MessagePage title="Portfolio not found" message={result.error.message} />
+      <MessagePage title="Portfolio not found" message={result.error.message} noIndex />
     ) : (
       <MessagePage
         title="Something went wrong"
         message="We could not load this portfolio. Please try again later."
+        noIndex
       />
     )
   }
