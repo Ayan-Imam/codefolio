@@ -45,13 +45,14 @@ function ProjectCard({ project }) {
 
 // A dark, high-contrast, neon layout.
 // `data` is the portfolio: { username, templateId, profile, projects, skills }
-function CyberpunkTemplate({ data }) {
+function CyberpunkTemplate({ data, embedded = false }) {
+  const PageContent = embedded ? 'div' : 'main'
   const { profile = {}, projects = [], skills = [], certificates = [] } = data
   const links = getProfileLinks(profile)
 
   return (
     <div className="cyber">
-      <main className="cyber-page">
+      <PageContent className="cyber-page">
         {/* ---------- Header ---------- */}
         <header className="cyber-header">
           {isHttpUrl(profile.photoUrl) && (
@@ -117,7 +118,7 @@ function CyberpunkTemplate({ data }) {
           </section>
         )}
         <CertificateGallery certificates={certificates} variant="cyberpunk" />
-      </main>
+      </PageContent>
     </div>
   )
 }

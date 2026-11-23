@@ -10,14 +10,14 @@ const templateMap = {
 
 // Picks the layout for a user and renders it with that user's data.
 // `userData` is the portfolio: { username, templateId, profile, projects, skills }
-function PortfolioRenderer({ userData }) {
+function PortfolioRenderer({ userData, embedded = false }) {
   // hasOwn checks only the map's own keys. A plain templateMap[id] lookup would also
   // find inherited names like "constructor" and crash. Unknown ids use the default.
   const SelectedLayout = Object.hasOwn(templateMap, userData.templateId)
     ? templateMap[userData.templateId]
     : MinimalistTemplate
 
-  return <SelectedLayout data={userData} />
+  return <SelectedLayout data={userData} embedded={embedded} />
 }
 
 export default PortfolioRenderer

@@ -5,13 +5,14 @@ import CertificateGallery from './CertificateGallery.jsx'
 
 // A clean, light, single-column layout.
 // `data` is the portfolio: { username, templateId, profile, projects, skills }
-function MinimalistTemplate({ data }) {
+function MinimalistTemplate({ data, embedded = false  }) {
+  const PageContent = embedded ? 'div' : 'main'
   const { profile = {}, projects = [], skills = [], certificates = [] } = data
   const links = getProfileLinks(profile)
 
   return (
     <div className="minimal">
-      <main className="minimal-page">
+      <PageContent className="minimal-page">
         {/* ---------- Header ---------- */}
         <header>
           {isHttpUrl(profile.photoUrl) && (
@@ -108,7 +109,7 @@ function MinimalistTemplate({ data }) {
           </section>
         )}
         <CertificateGallery certificates={certificates} variant="minimalist" />
-      </main>
+      </PageContent>
     </div>
   )
 }
