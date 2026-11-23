@@ -33,7 +33,7 @@ function PublicPortfolioPage() {
 
   // No result for the current username yet
   if (result.username !== username) {
-    return <MessagePage title="Loading portfolio..." />
+    return <MessagePage title="Loading portfolio..." loading />
   }
 
   if (result.error) {

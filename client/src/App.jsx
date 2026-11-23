@@ -1,24 +1,20 @@
-import { Routes, Route, Navigate } from 'react-router'
+import { Routes, Route } from 'react-router'
 import DashboardPage from './pages/dashboard/DashboardPage.jsx'
 import StyleGuidePage from './pages/dashboard/StyleGuidePage.jsx'
+import LandingPage from './pages/public/LandingPage.jsx'
 import PublicPortfolioPage from './pages/public/PublicPortfolioPage.jsx'
 import MessagePage from './pages/public/MessagePage.jsx'
 
 function App() {
   return (
     <Routes>
-      {/* The home page just sends people to the builder for now */}
-      <Route path="/" element={<Navigate to="/dashboard" replace />} />
+      <Route path="/" element={<LandingPage />} />
 
-      {/* The builder, and a private page for checking the design system.
-          Two path segments, so /dashboard/styleguide can never clash with a username. */}
       <Route path="/dashboard" element={<DashboardPage />} />
       <Route path="/dashboard/styleguide" element={<StyleGuidePage />} />
 
-      {/* Public portfolios, e.g. /neon_user */}
       <Route path="/:username" element={<PublicPortfolioPage />} />
 
-      {/* Anything else, e.g. /a/b */}
       <Route
         path="*"
         element={
