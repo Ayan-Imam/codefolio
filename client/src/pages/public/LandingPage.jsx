@@ -31,6 +31,12 @@ const templates = [
     previewClass: 'border-cyan-400/30 bg-slate-950 text-white',
     accentClass: 'text-cyan-300',
   },
+  {
+  name: 'Editorial',
+  description: 'A warm, magazine-style layout with serif headings and project imagery.',
+  previewClass: 'border-[#c6bfac] bg-[#f7f3e9] text-[#29271f] font-serif',
+  accentClass: 'text-[#783b2b]',
+},
 ]
 
 const builderLinkClass =
@@ -111,7 +117,7 @@ function LandingPage() {
           <h2 id="templates-heading" className="mb-6 font-display text-3xl font-bold text-white">
             Portfolio templates
           </h2>
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {templates.map(({ name, description, previewClass, accentClass }) => (
               <Card as="article" key={name}>
                 <h3 className="font-display text-xl font-semibold text-white">{name}</h3>

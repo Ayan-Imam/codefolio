@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 // Every template the app supports.
 // When we add a new template, its id goes here AND in PortfolioRenderer's templateMap.
-export const TEMPLATE_IDS = ['minimalist', 'cyberpunk'];
+export const TEMPLATE_IDS = ['minimalist', 'cyberpunk','editorial'];
 
 // Usernames that would clash with app URLs (/dashboard, /login ...) or look official
 export const RESERVED_USERNAMES = [

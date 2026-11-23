@@ -42,6 +42,7 @@ function DashboardForm({ onSubmit, editing = false, onImageUpload }) {
             <select className={inputClass} {...register('templateId')}>
               <option value="minimalist">Minimalist</option>
               <option value="cyberpunk">Cyberpunk</option>
+              <option value="editorial">Editorial</option>
             </select>
           </FormField>
 
