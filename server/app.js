@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
 import userRoutes from './routes/user.routes.js';
+import { getUserByUsername } from './controllers/user.controller.js';
 import errorHandler from './middleware/error.middleware.js';
 
 const app = express();
@@ -28,6 +29,11 @@ app.get('/api/health', (req, res) => {
 
 // User routes: everything in user.routes.js lives under /api/users
 app.use('/api/users', userRoutes);
+
+// Public vanity URL on the API server itself: GET /neon_user returns the same
+// portfolio JSON as GET /api/users/neon_user (same controller function).
+// Declared after the /api routes so they always win.
+app.get('/:username', getUserByUsername);
 
 // ---------- 404 handler ----------
 // Runs only if no route above matched
