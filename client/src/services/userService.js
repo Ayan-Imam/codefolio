@@ -15,3 +15,28 @@ export const createUser = (payload, token) =>
 // encodeURIComponent keeps odd characters in the username from breaking the URL
 export const getUserByUsername = (username) =>
   apiRequest(`/users/${encodeURIComponent(username)}`)
+
+const myPortfoliosPath = '/users/me/portfolios'
+
+const authHeaders = (token) => ({
+  'Content-Type': 'application/json',
+  Authorization: `Bearer ${token}`,
+})
+
+export const listMyPortfolios = (token, signal) =>
+  apiRequest(myPortfoliosPath, {
+    headers: authHeaders(token),
+    signal,
+  })
+
+export const getMyPortfolio = (username, token) =>
+  apiRequest(`${myPortfoliosPath}/${encodeURIComponent(username)}`, {
+    headers: authHeaders(token),
+  })
+
+export const updateMyPortfolio = (username, payload, token) =>
+  apiRequest(`${myPortfoliosPath}/${encodeURIComponent(username)}`, {
+    method: 'PATCH',
+    headers: authHeaders(token),
+    body: JSON.stringify(payload),
+  })

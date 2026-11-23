@@ -7,8 +7,7 @@ import ProjectsSection from './ProjectsSection.jsx'
 import { inputClass, rowClass } from '../../utils/formStyles.js'
 import { URL_RULE } from '../../utils/formRules.js'
 
-function DashboardForm({ onSubmit }) {
-  // The form is created in DashboardPage and shared through FormProvider
+function DashboardForm({ onSubmit, editing = false }) {
   const {
     register,
     handleSubmit,
@@ -19,8 +18,12 @@ function DashboardForm({ onSubmit }) {
   const socialErrors = profileErrors.socialLinks || {}
 
   return (
-    <form  id="portfolio-form" onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-6">
-      {/* ---------- Basic info ---------- */}
+    <form
+      id="portfolio-form"
+      onSubmit={handleSubmit(onSubmit)}
+      noValidate
+      className="flex flex-col gap-6"
+    >
       <SectionCard
         id="profile"
         title="Basic info"
@@ -29,12 +32,13 @@ function DashboardForm({ onSubmit }) {
         <div className={rowClass}>
           <FormField
             label="Username *"
-            hint="Becomes your portfolio URL"
+            hint={editing ? 'Your published portfolio URL is fixed' : 'Becomes your portfolio URL'}
             error={errors.username}
           >
             <input
               className={inputClass}
               placeholder="jane_dev"
+              readOnly={editing}
               {...register('username', {
                 required: 'Username is required',
                 minLength: { value: 3, message: 'At least 3 characters' },
@@ -107,7 +111,6 @@ function DashboardForm({ onSubmit }) {
         </div>
       </SectionCard>
 
-      {/* ---------- Links ---------- */}
       <SectionCard
         id="links"
         title="Links"
@@ -156,7 +159,6 @@ function DashboardForm({ onSubmit }) {
         </div>
       </SectionCard>
 
-      {/* ---------- Repeating sections ---------- */}
       <SkillsSection />
       <ProjectsSection />
 
