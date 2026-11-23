@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
+import { Helmet } from 'react-helmet-async'
 import PortfolioRenderer from '../../components/common/PortfolioRenderer.jsx'
 import MessagePage from './MessagePage.jsx'
 import { getUserByUsername } from '../../services/userService.js'
+import { getPortfolioSeo } from '../../utils/seo.js'
 
 function PublicPortfolioPage() {
   // The :username part of the URL, e.g. "neon_user" for /neon_user
@@ -45,7 +47,19 @@ function PublicPortfolioPage() {
     )
   }
 
-  return <PortfolioRenderer userData={result.user} />
+  // Title and meta description come from this user's own data
+  const seo = getPortfolioSeo(result.user)
+
+  return (
+    <>
+      <Helmet>
+        <title>{seo.title}</title>
+        <meta name="description" content={seo.description} />
+      </Helmet>
+
+      <PortfolioRenderer userData={result.user} />
+    </>
+  )
 }
 
 export default PublicPortfolioPage
