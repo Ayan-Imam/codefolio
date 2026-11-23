@@ -50,7 +50,7 @@ const userSchema = new mongoose.Schema(
       index: true,
       select: false,
     },
-    
+
     username: {
       type: String,
       required: [true, 'Username is required'],
@@ -76,6 +76,7 @@ const userSchema = new mongoose.Schema(
         trim: true,
         maxlength: [80, 'Full name cannot exceed 80 characters'],
       },
+      photoUrl: { type: String, trim: true, default: '' },
       headline: { type: String, trim: true, maxlength: 120, default: '' },
       bio: { type: String, trim: true, maxlength: 1000, default: '' },
       location: { type: String, trim: true, maxlength: 80, default: '' },
