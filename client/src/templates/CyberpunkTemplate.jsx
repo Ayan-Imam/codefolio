@@ -1,6 +1,7 @@
 import './CyberpunkTemplate.css'
 import { isHttpUrl } from '../utils/formRules.js'
 import { getProfileLinks } from '../utils/portfolioData.js'
+import CertificateGallery from './CertificateGallery.jsx'
 
 // One project card. Defined here because only this template uses it.
 function ProjectCard({ project }) {
@@ -45,7 +46,7 @@ function ProjectCard({ project }) {
 // A dark, high-contrast, neon layout.
 // `data` is the portfolio: { username, templateId, profile, projects, skills }
 function CyberpunkTemplate({ data }) {
-  const { profile = {}, projects = [], skills = [] } = data
+  const { profile = {}, projects = [], skills = [], certificates = [] } = data
   const links = getProfileLinks(profile)
 
   return (
@@ -115,6 +116,7 @@ function CyberpunkTemplate({ data }) {
             </div>
           </section>
         )}
+        <CertificateGallery certificates={certificates} variant="cyberpunk" />
       </main>
     </div>
   )

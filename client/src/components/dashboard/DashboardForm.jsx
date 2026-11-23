@@ -7,6 +7,7 @@ import SkillsSection from './SkillsSection.jsx'
 import ProjectsSection from './ProjectsSection.jsx'
 import { inputClass, rowClass } from '../../utils/formStyles.js'
 import { URL_RULE } from '../../utils/formRules.js'
+import CertificatesSection from './CertificatesSection.jsx'
 
 function DashboardForm({ onSubmit, editing = false, onImageUpload }) {
   const {
@@ -173,7 +174,7 @@ function DashboardForm({ onSubmit, editing = false, onImageUpload }) {
 
       <SkillsSection />
       <ProjectsSection onImageUpload={onImageUpload} />
-
+      <CertificatesSection onImageUpload={onImageUpload} />
       <Button type="submit" disabled={isSubmitting} className="py-3 text-base">
         {isSubmitting ? 'Saving...' : 'Save portfolio'}
       </Button>

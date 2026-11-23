@@ -13,4 +13,10 @@ export const toApiPayload = (data) => ({
     category: skill.category,
     items: parseSkillItems(skill.itemsText),
   })),
+  certificates: (data.certificates ?? []).map(({ title, issuer, issuedMonth, imageUrl }) => ({
+    title: title.trim(),
+    issuer: issuer.trim(),
+    issuedMonth,
+    imageUrl: imageUrl.trim(),
+  }))
 })

@@ -3,6 +3,7 @@ import BrowserFrame from './BrowserFrame.jsx'
 import { toApiPayload } from '../../utils/formatUserData.js'
 import { isHttpUrl } from '../../utils/formRules.js'
 import { getProfileLinks } from '../../utils/portfolioData.js'
+import CertificateGallery from '../../templates/CertificateGallery.jsx'
 
 // Renders nothing unless the URL is a valid http(s) link
 function PreviewLink({ href, children }) {
@@ -25,6 +26,9 @@ function PortfolioPreview() {
 
   // Re-renders only this component whenever any form value changes
   const values = useWatch({ control })
+  const certificates = (values?.certificates ?? []).filter(
+    (certificate) => certificate.title?.trim()
+  )
 
   // Same conversion the Save button uses (skills become real `items` arrays)
   const { username, profile = {}, projects = [], skills = [] } = toApiPayload(values)
@@ -127,6 +131,7 @@ function PortfolioPreview() {
               ))}
             </section>
           )}
+          <CertificateGallery certificates={certificates} variant="cyberpunk" />
         </div>
       </BrowserFrame>
     </div>

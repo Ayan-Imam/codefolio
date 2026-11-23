@@ -92,6 +92,18 @@ const userSchema = new mongoose.Schema(
 
     projects: [projectSchema],
     skills: [skillCategorySchema],
+    certificates: [
+      {
+        title: { type: String, trim: true, required: true },
+        issuer: { type: String, trim: true, required: true },
+        issuedMonth: {
+          type: String,
+          default: '',
+          match: /^(?:\d{4}-(?:0[1-9]|1[0-2]))?$/,
+        },
+        imageUrl: { type: String, trim: true, default: '' },
+      },
+    ],
 
     // Which layout renders this user's portfolio
     templateId: {
