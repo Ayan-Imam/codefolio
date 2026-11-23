@@ -8,6 +8,7 @@ import ProjectsSection from './ProjectsSection.jsx'
 import { inputClass, rowClass } from '../../utils/formStyles.js'
 import { URL_RULE } from '../../utils/formRules.js'
 import CertificatesSection from './CertificatesSection.jsx'
+import TimelineSection from './TimelineSection.jsx'
 
 function DashboardForm({ onSubmit, editing = false, onImageUpload }) {
   const {
@@ -32,7 +33,7 @@ function DashboardForm({ onSubmit, editing = false, onImageUpload }) {
         description="Your name, headline and a short bio. This is the first thing visitors see."
       >
         <div className={rowClass}>
-          
+
           <FormField
             label="Portfolio theme"
             hint="Save your portfolio to publish the selected theme."
@@ -186,6 +187,7 @@ function DashboardForm({ onSubmit, editing = false, onImageUpload }) {
 
       <SkillsSection />
       <ProjectsSection onImageUpload={onImageUpload} />
+      <TimelineSection />
       <CertificatesSection onImageUpload={onImageUpload} />
       <Button type="submit" disabled={isSubmitting} className="py-3 text-base">
         {isSubmitting ? 'Saving...' : 'Save portfolio'}

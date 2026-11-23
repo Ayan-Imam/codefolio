@@ -40,6 +40,50 @@ const skillCategorySchema = new mongoose.Schema({
   items: [{ type: String, trim: true, maxlength: 50 }],
 });
 
+const monthPattern = /^\d{4}-(0[1-9]|1[0-2])$/;
+
+const timelineEntrySchema = new mongoose.Schema({
+  type: {
+    type: String,
+    enum: ['education', 'experience'],
+    required: true,
+  },
+  title: {
+    type: String,
+    trim: true,
+    required: [true, 'Enter a degree or role'],
+    maxlength: 120,
+  },
+  organization: {
+    type: String,
+    trim: true,
+    required: [true, 'Enter an institution or company'],
+    maxlength: 120,
+  },
+  startMonth: {
+    type: String,
+    required: [true, 'Choose a start month'],
+    match: [monthPattern, 'Start month must use YYYY-MM'],
+  },
+  endMonth: {
+    type: String,
+    default: '',
+    validate: {
+      validator(value) {
+        if (value === '') return true;
+        return monthPattern.test(value) && value >= this.startMonth;
+      },
+      message: 'Choose an end month on or after the start month',
+    },
+  },
+  description: {
+    type: String,
+    trim: true,
+    maxlength: 1000,
+    default: '',
+  },
+});
+
 // ---------- Main schema: the user ----------
 const userSchema = new mongoose.Schema(
   {
@@ -104,6 +148,7 @@ const userSchema = new mongoose.Schema(
         imageUrl: { type: String, trim: true, default: '' },
       },
     ],
+    timeline: { type: [timelineEntrySchema], default: [] },
 
     // Which layout renders this user's portfolio
     templateId: {

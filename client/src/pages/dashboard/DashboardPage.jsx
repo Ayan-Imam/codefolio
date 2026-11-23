@@ -33,7 +33,8 @@ const defaultValues = {
   },
   projects: [],
   skills: [],
-  certificates: []
+  certificates: [],
+  timeline: []
 }
 
 const sections = [
@@ -62,7 +63,8 @@ function toFormValues(portfolio) {
       category: skill.category,
       itemsText: (skill.items ?? []).join(', '),
     })),
-    certificates: portfolio.certificates ?? []
+    certificates: portfolio.certificates ?? [],
+    timeline: portfolio.timeline ?? []
   }
 }
 

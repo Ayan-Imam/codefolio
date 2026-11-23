@@ -2,7 +2,19 @@ import User from '../models/user.js';
 
 // POST /api/users
 export const createUser = async (req, res) => {
-  const { username, profile, projects, skills, certificates, templateId } = req.body ?? {};
+  const {
+    username,
+    profile,
+    projects,
+    skills,
+    certificates,
+    timeline,
+    templateId,
+  } = req.body ?? {};
+
+  if (timeline !== undefined && !Array.isArray(timeline)) {
+    return res.status(400).json({ message: 'Timeline must be an array' });
+  }
 
   const user = await User.create({
     accountId: req.accountId,
@@ -11,6 +23,7 @@ export const createUser = async (req, res) => {
     projects,
     skills,
     certificates,
+    timeline,
     templateId,
   });
 
@@ -67,7 +80,12 @@ export const updateMyPortfolio = async (req, res) => {
     return res.status(404).json({ message: 'Saved portfolio not found' });
   }
 
-  const { profile, projects, skills, certificates, templateId } = req.body ?? {};
+  const { profile, projects, skills, certificates, timeline, templateId } =
+    req.body ?? {};
+
+  if (timeline !== undefined && !Array.isArray(timeline)) {
+    return res.status(400).json({ message: 'Timeline must be an array' });
+  }
 
   if (
     (profile !== undefined &&
@@ -84,6 +102,7 @@ export const updateMyPortfolio = async (req, res) => {
   if (projects !== undefined) portfolio.projects = projects;
   if (skills !== undefined) portfolio.skills = skills;
   if (certificates !== undefined) portfolio.certificates = certificates;
+  if (timeline !== undefined) portfolio.timeline = timeline;
   if (templateId !== undefined) portfolio.templateId = templateId;
 
   await portfolio.save();

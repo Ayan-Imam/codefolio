@@ -2,6 +2,7 @@ import './CyberpunkTemplate.css'
 import { isHttpUrl } from '../utils/formRules.js'
 import { getProfileLinks } from '../utils/portfolioData.js'
 import CertificateGallery from './CertificateGallery.jsx'
+import PortfolioTimeline from './PortfolioTimeline.jsx'
 
 // One project card. Defined here because only this template uses it.
 function ProjectCard({ project }) {
@@ -117,6 +118,7 @@ function CyberpunkTemplate({ data, embedded = false }) {
             </div>
           </section>
         )}
+        <PortfolioTimeline entries={data.timeline} variant="cyberpunk" />
         <CertificateGallery certificates={certificates} variant="cyberpunk" />
       </PageContent>
     </div>

@@ -2,6 +2,7 @@ import './MinimalistTemplate.css'
 import { isHttpUrl } from '../utils/formRules.js'
 import { getProfileLinks } from '../utils/portfolioData.js'
 import CertificateGallery from './CertificateGallery.jsx'
+import PortfolioTimeline from './PortfolioTimeline.jsx'
 
 // A clean, light, single-column layout.
 // `data` is the portfolio: { username, templateId, profile, projects, skills }
@@ -108,6 +109,7 @@ function MinimalistTemplate({ data, embedded = false  }) {
             ))}
           </section>
         )}
+        <PortfolioTimeline entries={data.timeline} variant="minimalist" />
         <CertificateGallery certificates={certificates} variant="minimalist" />
       </PageContent>
     </div>
