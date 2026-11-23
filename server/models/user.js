@@ -43,6 +43,14 @@ const skillCategorySchema = new mongoose.Schema({
 // ---------- Main schema: the user ----------
 const userSchema = new mongoose.Schema(
   {
+
+    accountId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Account',
+      index: true,
+      select: false,
+    },
+    
     username: {
       type: String,
       required: [true, 'Username is required'],

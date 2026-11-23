@@ -1,9 +1,13 @@
 import { apiRequest } from './api.js'
 
 // POST /api/users: creates a new user from the dashboard form data
-export const createUser = (payload) =>
+export const createUser = (payload, token) =>
   apiRequest('/users', {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
     body: JSON.stringify(payload),
   })
 

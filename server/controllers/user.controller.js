@@ -1,16 +1,20 @@
 import User from '../models/user.js';
+import Account from '../models/account.js';
 
 // POST /api/users
 // Creates a new user (profile, projects, skills and template) from the request body
 export const createUser = async (req, res) => {
   // Take only the fields we expect, ignore anything else in the body
-  const { username, profile, projects, skills, templateId } = req.body;
+  const { username, profile, projects, skills, templateId } = req.body ?? {};
 
   // create() builds the document, validates it against the schema, then saves it.
   // If templateId is undefined, Mongoose fills in the default ('minimalist').
-  const user = await User.create({ username, profile, projects, skills, templateId });
+  const user = await User.create({ accountId: req.accountId, username, profile, projects, skills, templateId });
 
-  res.status(201).json(user);
+  const portfolio = user.toObject();
+  delete portfolio.accountId;
+
+  return res.status(201).json(portfolio);
 };
 
 // GET /api/users/:username

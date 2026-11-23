@@ -36,7 +36,7 @@ const sections = [
   { id: 'projects', label: 'Projects' },
 ]
 
-function DashboardPage() {
+function DashboardPage({ token, onSignOut }) {
   const methods = useForm({ defaultValues })
 
   // null = nothing to show, otherwise
@@ -48,13 +48,17 @@ function DashboardPage() {
     setStatus(null)
 
     try {
-      const user = await createUser(toApiPayload(data))
+      const user = await createUser(toApiPayload(data), token)
       setStatus({
         type: 'success',
         message: `Saved! Portfolio created for "${user.username}".`,
         username: user.username,
       })
     } catch (error) {
+      if (error.status === 401) {
+        onSignOut()
+        return
+      }
       // error.message comes from the server's { message } reply (see api.js)
       setStatus({ type: 'error', message: error.message })
     }
@@ -71,7 +75,7 @@ function DashboardPage() {
 
       {/* The provider wraps everything so the header, stats and preview can read the form */}
       <FormProvider {...methods}>
-        <AppHeader savedUsername={savedUsername} />
+        <AppHeader savedUsername={savedUsername} onSignOut={onSignOut} />
 
         <main className="mx-auto flex max-w-7xl flex-col gap-8 px-6 py-8">
           {/* ---------- Welcome ---------- */}

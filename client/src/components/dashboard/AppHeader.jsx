@@ -3,7 +3,7 @@ import { useFormContext } from 'react-hook-form'
 import Button from '../common/Button.jsx'
 
 // The sticky top bar. `savedUsername` is set after a successful save.
-function AppHeader({ savedUsername }) {
+function AppHeader({  savedUsername, onSignOut } ) {
   const {
     formState: { isSubmitting },
   } = useFormContext()
@@ -33,6 +33,9 @@ function AppHeader({ savedUsername }) {
           {/* form="portfolio-form" submits the form even though this button sits outside it */}
           <Button type="submit" form="portfolio-form" size="sm" disabled={isSubmitting}>
             {isSubmitting ? 'Saving...' : 'Save portfolio'}
+          </Button>
+          <Button variant="ghost" size="sm" onClick={onSignOut}>
+            Sign out
           </Button>
         </div>
       </div>

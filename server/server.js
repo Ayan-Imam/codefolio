@@ -7,6 +7,10 @@ import connectDB from './config/db.js';
 
 const PORT = process.env.PORT || 5000;
 
+if (!/^[a-f0-9]{64}$/i.test(process.env.JWT_SECRET ?? '')) {
+  throw new Error('Set JWT_SECRET in server/.env to the generated 64-character hex value');
+}
+
 const startServer = async () => {
   // 1. Connect to the database first
   await connectDB();
