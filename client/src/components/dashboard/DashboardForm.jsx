@@ -19,7 +19,7 @@ function DashboardForm({ onSubmit }) {
   const socialErrors = profileErrors.socialLinks || {}
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-6">
+    <form  id="portfolio-form" onSubmit={handleSubmit(onSubmit)} noValidate className="flex flex-col gap-6">
       {/* ---------- Basic info ---------- */}
       <SectionCard
         id="profile"
