@@ -20,6 +20,7 @@ import { toApiPayload } from '../../utils/formatUserData.js'
 
 const defaultValues = {
   username: '',
+  templateId: 'minimalist',
   profile: {
     fullName: '',
     photoUrl: '',
@@ -47,6 +48,7 @@ function toFormValues(portfolio) {
 
   return {
     username: portfolio.username,
+    templateId: portfolio.templateId ?? 'minimalist',
     profile: {
       ...defaultValues.profile,
       ...profile,

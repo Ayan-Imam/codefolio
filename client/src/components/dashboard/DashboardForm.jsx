@@ -32,6 +32,18 @@ function DashboardForm({ onSubmit, editing = false, onImageUpload }) {
         description="Your name, headline and a short bio. This is the first thing visitors see."
       >
         <div className={rowClass}>
+          
+          <FormField
+            label="Portfolio theme"
+            hint="Save your portfolio to publish the selected theme."
+            error={errors.templateId}
+          >
+            <select className={inputClass} {...register('templateId')}>
+              <option value="minimalist">Minimalist</option>
+              <option value="cyberpunk">Cyberpunk</option>
+            </select>
+          </FormField>
+
           <FormField
             label="Username *"
             hint={
