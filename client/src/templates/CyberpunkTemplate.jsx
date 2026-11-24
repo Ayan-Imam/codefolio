@@ -63,7 +63,14 @@ function CyberpunkTemplate({ data, embedded = false }) {
               className="mb-4 size-24 rounded-xl border border-cyan-400/60 object-cover"
             />
           )}
-          <h1 className="cyber-name">{profile.fullName}</h1>
+          <h1 className="cyber-name">
+            {profile.fullName}
+            {data.isPro === true && (
+              <span className="ml-2 inline-block align-middle rounded-full bg-indigo-700 px-2 py-0.5 text-xs font-semibold text-white">
+                Pro
+              </span>
+            )}
+          </h1>
           {profile.headline && <p className="cyber-headline">{profile.headline}</p>}
           {profile.location && <p className="cyber-location">{profile.location}</p>}
         </header>

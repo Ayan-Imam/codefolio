@@ -6,6 +6,7 @@ import userRoutes from './routes/user.routes.js';
 import uploadRoutes from './routes/upload.routes.js';
 import { getUserByUsername } from './controllers/user.controller.js';
 import errorHandler from './middleware/error.middleware.js';
+import contactRoutes from "./routes/contact.routes.js";
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.get('/api/health', (req, res) => {
 
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
+app.use("/api/contact", contactRoutes);
 app.use('/api/uploads', uploadRoutes);
 
 // Public portfolio URL, for example /neon_user.

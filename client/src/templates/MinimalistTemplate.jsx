@@ -6,7 +6,7 @@ import PortfolioTimeline from './PortfolioTimeline.jsx'
 
 // A clean, light, single-column layout.
 // `data` is the portfolio: { username, templateId, profile, projects, skills }
-function MinimalistTemplate({ data, embedded = false  }) {
+function MinimalistTemplate({ data, embedded = false }) {
   const PageContent = embedded ? 'div' : 'main'
   const { profile = {}, projects = [], skills = [], certificates = [] } = data
   const links = getProfileLinks(profile)
@@ -23,7 +23,16 @@ function MinimalistTemplate({ data, embedded = false  }) {
               className="mb-4 size-24 rounded-full border border-slate-200 object-cover"
             />
           )}
-          <h1 className="minimal-name">{profile.fullName}</h1>
+          <h1 className="minimal-name">
+
+            {profile.fullName}
+            {data.isPro === true && (
+              <span className="ml-2 inline-block align-middle rounded-full bg-indigo-700 px-2 py-0.5 text-xs font-semibold text-white">
+                Pro
+              </span>
+            )}
+
+          </h1>
           {profile.headline && <p className="minimal-headline">{profile.headline}</p>}
           {profile.location && <p className="minimal-location">{profile.location}</p>}
         </header>

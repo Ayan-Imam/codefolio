@@ -5,6 +5,7 @@ import PortfolioRenderer from '../../components/common/PortfolioRenderer.jsx'
 import MessagePage from './MessagePage.jsx'
 import { getUserByUsername } from '../../services/userService.js'
 import { getPortfolioSeo } from '../../utils/seo.js'
+import ContactForm from '../../components/common/ContactForm.jsx'
 
 function PublicPortfolioPage() {
   // The :username part of the URL, e.g. "neon_user" for /neon_user
@@ -59,6 +60,7 @@ function PublicPortfolioPage() {
       </Helmet>
 
       <PortfolioRenderer userData={result.user} />
+      <ContactForm key={username} username={username} />
     </>
   )
 }

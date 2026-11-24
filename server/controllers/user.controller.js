@@ -1,4 +1,5 @@
 import User from '../models/user.js';
+import Account from '../models/account.js';
 
 // POST /api/users
 export const createUser = async (req, res) => {
@@ -27,6 +28,15 @@ export const createUser = async (req, res) => {
     templateId,
   });
 
+  // console.log('Pro badge check', {
+  //   portfolioDb: User.db.name,
+  //   accountDb: Account.db.name,
+  //   accountCollection: Account.collection.name,
+  //   ownerId: user.accountId?.toString(),
+  //   accountFound: Boolean(account),
+  //   isPro: account?.isPro,
+  // });
+
   const portfolio = user.toObject();
   delete portfolio.accountId;
 
@@ -34,9 +44,13 @@ export const createUser = async (req, res) => {
 };
 
 // GET /api/users/:username
+// GET /api/users/:username
 export const getUserByUsername = async (req, res) => {
+  // console.log('Entered getUserByUsername', req.params.username);
   const username = req.params.username.toLowerCase();
-  const user = await User.findOne({ username }).select('-__v -profile.email');
+  const user = await User.findOne({ username })
+    .select('-__v -profile.email')
+    .select('+accountId');
 
   if (!user) {
     return res
@@ -44,7 +58,23 @@ export const getUserByUsername = async (req, res) => {
       .json({ message: `No portfolio found for "${req.params.username}"` });
   }
 
-  return res.json(user);
+  const owner = await User.collection.findOne(
+  { _id: user._id },
+  { projection: { accountId: 1 } }
+);
+
+const account = owner?.accountId
+  ? await Account.findById(owner.accountId).select('isPro').lean()
+  : null;
+  
+  // console.log('Pro lookup:', user.accountId?.toString(), account);
+  const portfolio = user.toJSON();
+  delete portfolio.accountId;
+
+  return res.json({
+    ...portfolio,
+    isPro: account?.isPro === true,
+  });
 };
 
 export const listMyPortfolios = async (req, res) => {
