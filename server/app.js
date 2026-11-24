@@ -1,3 +1,5 @@
+import 'dotenv/config';
+import connectDB from './config/db.js';
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
@@ -7,6 +9,12 @@ import uploadRoutes from './routes/upload.routes.js';
 import { getUserByUsername } from './controllers/user.controller.js';
 import errorHandler from './middleware/error.middleware.js';
 import contactRoutes from "./routes/contact.routes.js";
+
+if (!/^[a-f0-9]{64}$/i.test(process.env.JWT_SECRET ?? '')) {
+  throw new Error('Set JWT_SECRET to the generated 64-character hex value');
+}
+
+await connectDB();
 
 const app = express();
 
