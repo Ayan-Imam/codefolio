@@ -56,7 +56,7 @@ function App() {
       />
 
       <Route path="/:username" element={<PublicPortfolioPage />} />
-
+      <Route path="/user/:username" element={<PublicPortfolioPage />} />
       <Route
         path="*"
         element={
